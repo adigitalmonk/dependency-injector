@@ -1,14 +1,16 @@
 {
   "name": "injest",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Super simple dependency injection library inspired by require.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "mocha test/test.js"
+    "test": "mocha test/test.js",
+    "lint": "eslint **/*.js",
+    "lint:fix": "eslint --fix **/*.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Brad 'adigitalmonk' Boudreau",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^7.8.1",
     "mocha": "^8.1.3"
