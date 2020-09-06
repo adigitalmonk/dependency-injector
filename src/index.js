@@ -5,17 +5,7 @@ const definer = container => (name, deps, resolveable, opts = {}) => {
         deps = [];
     }
     
-    // if (deps) {    
-    //     deps.forEach(dep => {
-    //         const subdeps = container[dep].deps || [];
-    //         subdeps.forEach(subdep => {
-    //             console.log(subdep, dep);
-    //             if (subdep == dep) {
-    //                 throw new Error(`Circular Dependency: #{dep} -> #{subdep}`);
-    //             }
-    //         });
-    //     });
-    // }
+    // TODO: Circular dependencies?
 
     if (container[name] && !opts.override) {
         return false;
@@ -38,7 +28,7 @@ const load = (container, name) => {
     return resolveable(...deps.map(dep_name => load(container, dep_name)));
 };
 
-const caller = 
+const forger = 
     container => 
         (deps, callback) => 
             callback(...deps.map(dep_name => load(container, dep_name)));
@@ -49,7 +39,7 @@ module.exports = () => {
 
     return {
         define: definer(container),
-        call: caller(container),
+        forge: forger(container),
         // autorig: () => {}
     };
 };
