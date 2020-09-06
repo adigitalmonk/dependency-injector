@@ -32,14 +32,22 @@ const forger =
     container => 
         (deps, callback) => 
             callback(...deps.map(dep_name => load(container, dep_name)));
-            
 
-module.exports = () => {
-    const container = {};
+const cloner =
+    container => 
+        () => create(
+            Object.entries(container).reduce((acc, [key, value]) => { 
+                acc[key] = value;
+                return acc;
+            }, {})
+        );
 
+const create = (container) => {
     return {
         define: definer(container),
         forge: forger(container),
-        // autorig: () => {}
+        clone: cloner(container)
     };
 };
+
+module.exports = () => create({});
