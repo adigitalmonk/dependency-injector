@@ -67,6 +67,25 @@ const version = forge(["version"], version => version);
 console.log(version); // -> { major: 1, minor: 3, patch: 4 }
 ```
 
+### Cloned Containers
+
+We also have an exposed function that allows you to clone a container.
+This enables you to have different containers with some shared dependencies.
+
+```javascript
+const hephaestus = require("hephaestus");
+
+const constantContainer = hephaestus();
+constantContainer.define("pi", 3.1415);
+
+const formulaContainer = constantContainer.clone();
+formulaContainer.define("surfaceAreaPizza", ["pi"], pi => radius => (pi * r) ** 2)
+
+// constantContainer only has "pi"
+// formulaContainer has both "pi" and "surfaceAreaPizza"
+```
+
+
 ## Examples
 
 ### Express Middleware
@@ -118,3 +137,4 @@ app.get('/health', forge(['elasticSearch'], (elasticSearch) => (req, res) => {
 
 # Roadmap
 - Circular dependencies prevention
+- Better documentation, in-line or otherwise
