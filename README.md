@@ -25,7 +25,7 @@ When defining a function, you can also provide a list of dependencies that will 
 
 ```javascript
 define("one", () => 1);
-define("useOne", ["one"], (one) => 1 + 2);
+define("useOne", ["one"], (one) => one + 2);
 ```
 
 Whatever is returned by your defined callback is what is injected into the function that uses it.
