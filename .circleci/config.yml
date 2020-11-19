@@ -1,0 +1,23 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:15.2.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node_modules-{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          key: node_modules-{{ checksum "package-lock.json" }}
+          paths: 
+            - node_modules
+      - run: npm run lint
+      - run: npm test
+
+workflows:
+  test:
+    jobs:
+      - test
