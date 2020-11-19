@@ -92,7 +92,7 @@ const constantContainer = provide();
 constantContainer.define("pi", 3.1415);
 
 const formulaContainer = constantContainer.clone();
-formulaContainer.define("surfaceAreaPizza", ["pi"], pi => radius => (pi * r) ** 2)
+formulaContainer.define("surfaceAreaPizza", ["pi"], pi => radius => (pi * r) ** 2);
 
 // constantContainer only has "pi"
 // formulaContainer has both "pi" and "surfaceAreaPizza"
@@ -118,39 +118,37 @@ module.exports = logger => (req, _res, next) => {
 
 // src/index.js
 const app = require("express")();
-const provide = require("./services/provider")
-const loggerWare = provide(["logger"], require("./middleware/logger"))
+const provide = require("./services/provider");
+const loggerWare = provide(["logger"], require("./middleware/logger"));
 
-app.use(loggerWare)
-// etc
+app.use(loggerWare);
 ```
 
 ### Express Controller
 
 ```javascript
 // src/services/elasticSearch.js
-const { Client } = require("@elastic/elasticsearch")
-module.exports = elasticConfig => () => new Client({ node: "http://localhost:9200" })
+const { Client } = require("@elastic/elasticsearch");
+module.exports = elasticConfig => () => new Client({ node: "http://localhost:9200" });
 
 // src/services/provider.js
 const { define, provide } = require("provide.js");
-define("elasticConfig", () => ({ node: "http://localhost:9200" }))
+define("elasticConfig", () => ({ node: "http://localhost:9200" }));
 define("elasticSearch", ["elasticConfig"], require("./elasticSearch"));
 
 module.exports = provide;
 
 // src/controllers/health
 module.exports = elasticSearch => (req, res) => {
-    res.send(elasticSearch.cluster.health())
-}
+    res.send(elasticSearch.cluster.health());
+};
 
 // src/index.js
 const app = require("express")();
-const provide = require("./services/provider")
+const provide = require("./services/provider");
 const healthResource = require("./controllers/health");
 
 app.get("/health", provide(["elasticSearch"], healthResource);
-// etc
 ```
 
 # Roadmap
