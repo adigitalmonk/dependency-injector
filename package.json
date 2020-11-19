@@ -1,5 +1,5 @@
 {
-  "name": "hephaestus.js",
+  "name": "provide.js",
   "version": "0.1.0",
   "description": "Super simple dependency injection library inspired by require.js",
   "main": "src/index.js",
