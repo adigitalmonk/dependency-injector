@@ -4,7 +4,7 @@ const definer = container => (name, deps, resolveable, opts = {}) => {
         resolveable = deps;
         deps = [];
     }
-    
+
     // TODO: Circular dependencies?
 
     if (container[name] && !opts.override) {
@@ -21,22 +21,22 @@ const load = (container, name) => {
     }
 
     const { deps, resolveable } = container[name];
-    if (typeof(resolveable) !== "function") {
+    if (typeof (resolveable) !== "function") {
         return resolveable;
     }
 
     return resolveable(...deps.map(dep_name => load(container, dep_name)));
 };
 
-const forger = 
-    container => 
-        (deps, callback) => 
+const provider =
+    container =>
+        (deps, callback) =>
             callback(...deps.map(dep_name => load(container, dep_name)));
 
 const cloner =
-    container => 
+    container =>
         () => create(
-            Object.entries(container).reduce((acc, [key, value]) => { 
+            Object.entries(container).reduce((acc, [key, value]) => {
                 acc[key] = value;
                 return acc;
             }, {})
@@ -45,7 +45,7 @@ const cloner =
 const create = (container) => {
     return {
         define: definer(container),
-        forge: forger(container),
+        provide: provider(container),
         clone: cloner(container)
     };
 };
