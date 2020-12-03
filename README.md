@@ -148,7 +148,7 @@ const app = require("express")();
 const provide = require("./services/provider");
 const healthResource = require("./controllers/health");
 
-app.get("/health", provide(["elasticSearch"], healthResource);
+app.get("/health", provide(["elasticSearch"], healthResource));
 ```
 
 # Roadmap
