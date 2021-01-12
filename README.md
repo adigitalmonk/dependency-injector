@@ -129,7 +129,7 @@ app.use(loggerWare);
 ```javascript
 // src/services/elasticSearch.js
 const { Client } = require("@elastic/elasticsearch");
-module.exports = elasticConfig => () => new Client({ node: "http://localhost:9200" });
+module.exports = elasticConfig => () => new Client(elasticConfig);
 
 // src/services/provider.js
 const { define, provide } = require("provide.js");
