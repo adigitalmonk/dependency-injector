@@ -22,7 +22,8 @@ There are two main touch points for the container, `define` and `provide`.
 The library returns an function that will create the container and provide the two primary access functions.
 
 ```javascript
-const { define, provide } = require("provide.js");
+const providejs = require("provide.js");
+const { define, provide } = providejs();
 ```
 
 ### Defining dependencies
