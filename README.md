@@ -154,3 +154,4 @@ app.get("/health", provide(["elasticSearch"], healthResource));
 # Roadmap
 - Circular dependencies prevention
 - Better documentation, in-line or otherwise
+- Replace CircleCI with GitHub Actions

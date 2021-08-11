@@ -1,5 +1,5 @@
-const assert = require("assert");
-const providejs = require("../src");
+import assert from "assert";
+import providejs from "../dist/index.js";
 
 describe("Defining", () => {
     it("Returns true if successful", () => {
