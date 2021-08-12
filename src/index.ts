@@ -4,14 +4,14 @@ export interface DefinerOptions {
 
 export type Definer = (
     name: string,
-    deps: string[],
-    resolvable: unknown,
-    opts: DefinerOptions
+    deps: string[] | Resolvable,
+    resolvable?: Resolvable | DefinerOptions,
+    opts?: DefinerOptions
 ) => boolean;
 
 export type Provider = (
     deps: string[],
-    callback: (...args: any[]) => any
+    callback: (...args: unknown[]) => unknown
 ) => any
 
 export type Cloner = () => ContainerTools
@@ -22,9 +22,11 @@ export interface ContainerTools {
     clone: Cloner
 }
 
+export type Resolvable = unknown | ((...args: unknown[]) => unknown);
+
 interface ContainerResolvable {
     deps: string[],
-    resolveable: any
+    resolveable: Resolvable
 }
 
 interface Container {
@@ -36,7 +38,7 @@ type DefinerFactory = (container: Container) => Definer;
 const definer: DefinerFactory = container => (name, deps, resolveable, opts = ({} as DefinerOptions)) => {
     if (!Array.isArray(deps)) {
         opts = (typeof resolveable === "object" ? resolveable : {}) as DefinerOptions;
-        resolveable = deps;
+        resolveable = deps as Resolvable;
         deps = [];
     }
 
@@ -45,7 +47,10 @@ const definer: DefinerFactory = container => (name, deps, resolveable, opts = ({
         return false;
     }
 
-    container[name] = { deps, resolveable };
+    container[name] = {
+        deps: (deps as string[]),
+        resolveable
+    };
     return true;
 };
 
